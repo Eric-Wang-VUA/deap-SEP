@@ -84,6 +84,33 @@ class BenchmarkTest(unittest.TestCase):
         individual_case2 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
         fitness_case2 = binary.chuang_f1(individual_case2)
         self.assertEqual(fitness_case2[0], 30)
+    def test_inv_trap_function(self):
+        # Test cases for binary.inv_trap function
+
+        # Test case 1: All ones
+        individual_all_ones = [1] * 10
+        fitness_all_ones = binary.inv_trap(individual_all_ones)
+        self.assertEqual(fitness_all_ones, 9)
+
+        # Test case 2: Mixed zeros and ones
+        individual_mixed = [1, 0, 1, 0, 1, 1, 0, 0, 1, 0]
+        fitness_mixed = binary.inv_trap(individual_mixed)
+        self.assertEqual(fitness_mixed, sum(individual_mixed) - 1)
+
+        # Test case 3: All zeros
+        individual_all_zeros = [0] * 10
+        fitness_all_zeros = binary.inv_trap(individual_all_zeros)
+        self.assertEqual(fitness_all_zeros, len(individual_all_zeros))
+    def test_chuang_f3_function(self):
+        # Test case 1: All ones
+        individual_case1 = [1] * 41
+        fitness_case1 = binary.chuang_f3(individual_case1)
+        self.assertEqual(fitness_case1[0], 31)
+
+        # Test case 2: All zeros
+        individual_case2 = [0] * 41
+        fitness_case2 = binary.chuang_f3(individual_case2)
+        self.assertEqual(fitness_case2[0], 40)
 
 
 if __name__ == "__main__":
