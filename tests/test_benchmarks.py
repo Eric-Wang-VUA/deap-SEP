@@ -91,25 +91,21 @@ class BenchmarkTest(unittest.TestCase):
         self.assertEqual(fitness_all_zeros, len(individual_all_zeros))
     
     def test_chuang_f1_function(self):
-        # Test cases for binary.chuang_f1 function
 
-        # Test case 1: Example from the description
         individual_case1 = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0]
         fitness_case1 = binary.chuang_f1(individual_case1)
         self.assertEqual(fitness_case1[0], 30)
 
-        # Test case 2: Another example with different pattern
         individual_case2 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
         fitness_case2 = binary.chuang_f1(individual_case2)
         self.assertEqual(fitness_case2[0], 30)
 
     def test_chuang_f3_function(self):
-        # Test case 1: All ones
+        
         individual_case1 = [1] * 41
         fitness_case1 = binary.chuang_f3(individual_case1)
         self.assertEqual(fitness_case1[0], 31)
 
-        # Test case 2: All zeros
         individual_case2 = [0] * 41
         fitness_case2 = binary.chuang_f3(individual_case2)
         self.assertEqual(fitness_case2[0], 40)
