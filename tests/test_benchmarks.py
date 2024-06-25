@@ -72,18 +72,6 @@ class BenchmarkTest(unittest.TestCase):
         fitness_all_zeros = binary.trap(individual_all_zeros)
         self.assertEqual(fitness_all_zeros, 9)
     
-    def test_chuang_f1_function(self):
-        # Test cases for binary.chuang_f1 function
-
-        # Test case 1: Example from the description
-        individual_case1 = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0]
-        fitness_case1 = binary.chuang_f1(individual_case1)
-        self.assertEqual(fitness_case1[0], 30)
-
-        # Test case 2: Another example with different pattern
-        individual_case2 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
-        fitness_case2 = binary.chuang_f1(individual_case2)
-        self.assertEqual(fitness_case2[0], 30)
     def test_inv_trap_function(self):
         # Test cases for binary.inv_trap function
 
@@ -101,6 +89,20 @@ class BenchmarkTest(unittest.TestCase):
         individual_all_zeros = [0] * 10
         fitness_all_zeros = binary.inv_trap(individual_all_zeros)
         self.assertEqual(fitness_all_zeros, len(individual_all_zeros))
+    
+    def test_chuang_f1_function(self):
+        # Test cases for binary.chuang_f1 function
+
+        # Test case 1: Example from the description
+        individual_case1 = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0]
+        fitness_case1 = binary.chuang_f1(individual_case1)
+        self.assertEqual(fitness_case1[0], 30)
+
+        # Test case 2: Another example with different pattern
+        individual_case2 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+        fitness_case2 = binary.chuang_f1(individual_case2)
+        self.assertEqual(fitness_case2[0], 30)
+
     def test_chuang_f3_function(self):
         # Test case 1: All ones
         individual_case1 = [1] * 41
