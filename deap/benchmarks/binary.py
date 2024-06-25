@@ -39,24 +39,43 @@ def bin2float(min_, max_, nbits):
         return wrapped_function
     return wrap
 
+branch_coverage_trap = {
+    "trap_branch_1": False,  
+    "trap_branch_2": False
+}
 
 def trap(individual):
     u = sum(individual)
     k = len(individual)
     if u == k:
+        branch_coverage_trap["trap_branch_1"] = True
         return k
     else:
+        branch_coverage_trap["trap_branch_2"] = True
         return k - 1 - u
 
+def print_coverage_trap():
+    for branch, hit in branch_coverage_trap.items():
+        print(f"{branch} was {'hit' if hit else 'not hit'}")
+
+branch_coverage_inv_trap = {
+    "inv_trap_branch_1": False,  
+    "inv_trap_branch_2": False
+}
 
 def inv_trap(individual):
     u = sum(individual)
     k = len(individual)
     if u == 0:
+        branch_coverage_inv_trap["inv_trap_branch_1"] = True
         return k
     else:
+        branch_coverage_inv_trap["inv_trap_branch_2"] = True
         return u - 1
 
+def print_coverage_inv_trap():
+    for branch, hit in branch_coverage_inv_trap.items():
+        print(f"{branch} was {'hit' if hit else 'not hit'}")
 
 def chuang_f1(individual):
     """Binary deceptive function from : Multivariate Multi-Model Approach for
