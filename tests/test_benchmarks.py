@@ -56,6 +56,26 @@ class BenchmarkTest(unittest.TestCase):
             else:
                 assert wrong_population[0].fitness.values == ()
 
+    def test_chuang_f1_function(self):
+
+        individual_case1 = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0]
+        fitness_case1 = binary.chuang_f1(individual_case1)
+        self.assertEqual(fitness_case1[0], 30)
+
+        individual_case2 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+        fitness_case2 = binary.chuang_f1(individual_case2)
+        self.assertEqual(fitness_case2[0], 30)
+
+    def test_chuang_f3_function(self):
+        
+        individual_case1 = [1] * 41
+        fitness_case1 = binary.chuang_f3(individual_case1)
+        self.assertEqual(fitness_case1[0], 31)
+
+        individual_case2 = [0] * 41
+        fitness_case2 = binary.chuang_f3(individual_case2)
+        self.assertEqual(fitness_case2[0], 40)
+
     def test_selNSGA2(self):
         individual = []
         assert(emo.selNSGA2(individual, 0) == [])
