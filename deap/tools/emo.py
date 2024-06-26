@@ -227,6 +227,7 @@ def identity(obj):
     """
     return obj
 
+isDominated_branch = [False, False]
 
 def isDominated(wvalues1, wvalues2):
     """Returns whether or not *wvalues2* dominates *wvalues1*.
@@ -239,11 +240,20 @@ def isDominated(wvalues1, wvalues2):
     not_equal = False
     for self_wvalue, other_wvalue in zip(wvalues1, wvalues2):
         if self_wvalue > other_wvalue:
+            isDominated_branch[0] = True
             return False
         elif self_wvalue < other_wvalue:
+            isDominated_branch[1] = True
             not_equal = True
     return not_equal
 
+def print_isDominated():    
+    count = 0    
+    for i in isDominated_branch:        
+        if i:            
+            count += 1    
+    coverage = 100 * (count / 2)    
+    print("coverage of the function isDominated ", coverage, "%")
 
 def median(seq, key=identity):
     """Returns the median of *seq* - the numeric value separating the higher

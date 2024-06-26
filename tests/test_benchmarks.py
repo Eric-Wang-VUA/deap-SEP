@@ -68,6 +68,20 @@ class BenchmarkTest(unittest.TestCase):
         array = [5, 6, 8, 9, 19, 21]
         assert(emo._randomizedSelect(array, 0, 0, 1) == 5)
         assert(emo._randomizedSelect(array, 0, 5, 1) == 6)
+    
+    def test_selChuangF2(self):    
+        binary.chuang_f2([1, 2, 3])    
+        binary.chuang_f2([0, 0, 0])    
+        binary.chuang_f2([0, 1, 0])    
+        binary.chuang_f2([0, 0, 1])
+    
+    def test_selIsDominate(self):    
+        wvalues1 = [3, 2, 5]    
+        wvalues2 = [2, 2, 6]    
+        assert emo.isDominated(wvalues1, wvalues2) == False
+        wvalues1 = [3, 2, 5]    
+        wvalues2 = [3, 3, 6]    
+        assert emo.isDominated(wvalues1, wvalues2) == True
 
 if __name__ == "__main__":
     suite = unittest.TestLoader().loadTestsFromTestCase(BenchmarkTest)

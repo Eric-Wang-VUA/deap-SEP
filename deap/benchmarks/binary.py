@@ -104,6 +104,8 @@ def print_coverage_chuang_f1():
     for branch, hit in branch_coverage_chuang_f1.items():
         print(f"{branch} was {'hit' if hit else 'not hit'}")
 
+chuang_f2_branch = [False, False, False, False]
+
 def chuang_f2(individual):
     """Binary deceptive function from : Multivariate Multi-Model Approach for
     Globally Multimodal Problems by Chung-Yao Chuang and Wen-Lian Hsu.
@@ -113,18 +115,30 @@ def chuang_f2(individual):
     """
     total = 0
     if individual[-2] == 0 and individual[-1] == 0:
+        chuang_f2_branch[0] = True 
         for i in range(0, len(individual) - 2, 8):
             total += inv_trap(individual[i:i + 4]) + inv_trap(individual[i + 4:i + 8])
     elif individual[-2] == 0 and individual[-1] == 1:
+        chuang_f2_branch[1] = True 
         for i in range(0, len(individual) - 2, 8):
             total += inv_trap(individual[i:i + 4]) + trap(individual[i + 4:i + 8])
     elif individual[-2] == 1 and individual[-1] == 0:
+        chuang_f2_branch[2] = True 
         for i in range(0, len(individual) - 2, 8):
             total += trap(individual[i:i + 4]) + inv_trap(individual[i + 4:i + 8])
     else:
+        chuang_f2_branch[3] = True 
         for i in range(0, len(individual) - 2, 8):
             total += trap(individual[i:i + 4]) + trap(individual[i + 4:i + 8])
     return total,
+
+def print_chuang_f2_coverage():    
+    count = 0    
+    for i in chuang_f2_branch:        
+        if i:            
+            count += 1    
+    coverage = 100 * (count / 4)    
+    print("coverage of the function selDoubleTournament ", coverage, "%")
 
 branch_coverage_chuang_f3 = {
     "chuang_f3_branch_1": False,  
