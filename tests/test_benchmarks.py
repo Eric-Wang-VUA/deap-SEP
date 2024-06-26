@@ -56,6 +56,42 @@ class BenchmarkTest(unittest.TestCase):
             else:
                 assert wrong_population[0].fitness.values == ()
 
+    def test_trap_function(self):
+        # Test cases for binary.trap function
+
+        # Test case 1: All ones
+        individual_all_ones = [1] * 10
+        fitness_all_ones = binary.trap(individual_all_ones)
+        self.assertEqual(fitness_all_ones, 10)
+
+        # Test case 2: Mixed zeros and ones
+        individual_mixed = [1, 0, 1, 0, 1, 1, 0, 0, 1, 0]
+        fitness_mixed = binary.trap(individual_mixed)
+        self.assertEqual(fitness_mixed, 4)
+
+        # Test case 3: All zeros
+        individual_all_zeros = [0] * 10
+        fitness_all_zeros = binary.trap(individual_all_zeros)
+        self.assertEqual(fitness_all_zeros, 9)
+    
+    def test_inv_trap_function(self):
+        # Test cases for binary.inv_trap function
+
+        # Test case 1: All ones
+        individual_all_ones = [1] * 10
+        fitness_all_ones = binary.inv_trap(individual_all_ones)
+        self.assertEqual(fitness_all_ones, 9)
+
+        # Test case 2: Mixed zeros and ones
+        individual_mixed = [1, 0, 1, 0, 1, 1, 0, 0, 1, 0]
+        fitness_mixed = binary.inv_trap(individual_mixed)
+        self.assertEqual(fitness_mixed, sum(individual_mixed) - 1)
+
+        # Test case 3: All zeros
+        individual_all_zeros = [0] * 10
+        fitness_all_zeros = binary.inv_trap(individual_all_zeros)
+        self.assertEqual(fitness_all_zeros, len(individual_all_zeros))
+
     def test_chuang_f1_function(self):
 
         individual_case1 = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0]
