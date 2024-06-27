@@ -39,24 +39,48 @@ def bin2float(min_, max_, nbits):
         return wrapped_function
     return wrap
 
+branch_coverage_trap = {
+    "trap_branch_1": False,  
+    "trap_branch_2": False
+}
 
 def trap(individual):
     u = sum(individual)
     k = len(individual)
     if u == k:
+        branch_coverage_trap["trap_branch_1"] = True
         return k
     else:
+        branch_coverage_trap["trap_branch_2"] = True
         return k - 1 - u
 
+def print_coverage_trap():
+    for branch, hit in branch_coverage_trap.items():
+        print(f"{branch} was {'hit' if hit else 'not hit'}")
+
+branch_coverage_inv_trap = {
+    "inv_trap_branch_1": False,  
+    "inv_trap_branch_2": False
+}
 
 def inv_trap(individual):
     u = sum(individual)
     k = len(individual)
     if u == 0:
+        branch_coverage_inv_trap["inv_trap_branch_1"] = True
         return k
     else:
+        branch_coverage_inv_trap["inv_trap_branch_2"] = True
         return u - 1
 
+def print_coverage_inv_trap():
+    for branch, hit in branch_coverage_inv_trap.items():
+        print(f"{branch} was {'hit' if hit else 'not hit'}")
+
+branch_coverage_chuang_f1 = {
+    "chuang_f1_branch_1": False,  
+    "chuang_f1_branch_2": False
+}
 
 def chuang_f1(individual):
     """Binary deceptive function from : Multivariate Multi-Model Approach for
@@ -67,13 +91,20 @@ def chuang_f1(individual):
     """
     total = 0
     if individual[-1] == 0:
+        branch_coverage_chuang_f1["chuang_f1_branch_1"] = True
         for i in range(0, len(individual) - 1, 4):
             total += inv_trap(individual[i:i + 4])
     else:
+        branch_coverage_chuang_f1["chuang_f1_branch_2"] = True
         for i in range(0, len(individual) - 1, 4):
             total += trap(individual[i:i + 4])
     return total,
 
+def print_coverage_chuang_f1():
+    for branch, hit in branch_coverage_chuang_f1.items():
+        print(f"{branch} was {'hit' if hit else 'not hit'}")
+
+chuang_f2_branch = [False, False, False, False]
 
 def chuang_f2(individual):
     """Binary deceptive function from : Multivariate Multi-Model Approach for
@@ -84,19 +115,35 @@ def chuang_f2(individual):
     """
     total = 0
     if individual[-2] == 0 and individual[-1] == 0:
+        chuang_f2_branch[0] = True 
         for i in range(0, len(individual) - 2, 8):
             total += inv_trap(individual[i:i + 4]) + inv_trap(individual[i + 4:i + 8])
     elif individual[-2] == 0 and individual[-1] == 1:
+        chuang_f2_branch[1] = True 
         for i in range(0, len(individual) - 2, 8):
             total += inv_trap(individual[i:i + 4]) + trap(individual[i + 4:i + 8])
     elif individual[-2] == 1 and individual[-1] == 0:
+        chuang_f2_branch[2] = True 
         for i in range(0, len(individual) - 2, 8):
             total += trap(individual[i:i + 4]) + inv_trap(individual[i + 4:i + 8])
     else:
+        chuang_f2_branch[3] = True 
         for i in range(0, len(individual) - 2, 8):
             total += trap(individual[i:i + 4]) + trap(individual[i + 4:i + 8])
     return total,
 
+def print_chuang_f2_coverage():    
+    count = 0    
+    for i in chuang_f2_branch:        
+        if i:            
+            count += 1    
+    coverage = 100 * (count / 4)    
+    print("coverage of the function chuang_f2 ", coverage, "%")
+
+branch_coverage_chuang_f3 = {
+    "chuang_f3_branch_1": False,  
+    "chuang_f3_branch_2": False
+}
 
 def chuang_f3(individual):
     """Binary deceptive function from : Multivariate Multi-Model Approach for
@@ -107,14 +154,19 @@ def chuang_f3(individual):
     """
     total = 0
     if individual[-1] == 0:
+        branch_coverage_chuang_f3["chuang_f3_branch_1"] = True
         for i in range(0, len(individual) - 1, 4):
             total += inv_trap(individual[i:i + 4])
     else:
+        branch_coverage_chuang_f3["chuang_f3_branch_2"] = True
         for i in range(2, len(individual) - 3, 4):
             total += inv_trap(individual[i:i + 4])
         total += trap(individual[-2:] + individual[:2])
     return total,
 
+def print_coverage_chuang_f3():
+    for branch, hit in branch_coverage_chuang_f3.items():
+        print(f"{branch} was {'hit' if hit else 'not hit'}")
 
 # Royal Road Functions
 def royal_road1(individual, order):

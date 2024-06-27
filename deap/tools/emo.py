@@ -12,6 +12,9 @@ import numpy
 ######################################
 
 
+selNSGA2_branches = [False, False, False, False, False]
+
+
 def selNSGA2(individuals, k, nd='standard'):
     """Apply NSGA-II selection operator on the *individuals*. Usually, the
     size of *individuals* will be larger than *k* because any individual
@@ -32,11 +35,17 @@ def selNSGA2(individuals, k, nd='standard'):
     """
     if nd == 'standard':
         pareto_fronts = sortNondominated(individuals, k)
+        selNSGA2_branches[0] = True
     elif nd == 'log':
         pareto_fronts = sortLogNondominated(individuals, k)
+        selNSGA2_branches[1] = True
     else:
-        raise Exception('selNSGA2: The choice of non-dominated sorting '
+        selNSGA2_branches[2] = True
+        try:
+            raise Exception('selNSGA2: The choice of non-dominated sorting '
                         'method "{0}" is invalid.'.format(nd))
+        except:
+            return 0
 
     for front in pareto_fronts:
         assignCrowdingDist(front)
@@ -44,10 +53,22 @@ def selNSGA2(individuals, k, nd='standard'):
     chosen = list(chain(*pareto_fronts[:-1]))
     k = k - len(chosen)
     if k > 0:
+        selNSGA2_branches[3] = True
         sorted_front = sorted(pareto_fronts[-1], key=attrgetter("fitness.crowding_dist"), reverse=True)
         chosen.extend(sorted_front[:k])
+    else:
+        selNSGA2_branches[4] = True
 
     return chosen
+
+
+def print_selNSGA2Coverage():
+    count = 0
+    for item in selNSGA2_branches:
+        if item:
+            count += 1
+    coverage = (count / 5) * 100
+    print("The branch coverage of the function \"selNSHA2\" is ", coverage, "%.")
 
 
 def sortNondominated(individuals, k, first_front_only=False):
@@ -206,6 +227,7 @@ def identity(obj):
     """
     return obj
 
+isDominated_branch = [False, False]
 
 def isDominated(wvalues1, wvalues2):
     """Returns whether or not *wvalues2* dominates *wvalues1*.
@@ -218,11 +240,20 @@ def isDominated(wvalues1, wvalues2):
     not_equal = False
     for self_wvalue, other_wvalue in zip(wvalues1, wvalues2):
         if self_wvalue > other_wvalue:
+            isDominated_branch[0] = True
             return False
         elif self_wvalue < other_wvalue:
+            isDominated_branch[1] = True
             not_equal = True
     return not_equal
 
+def print_isDominated():    
+    count = 0    
+    for i in isDominated_branch:        
+        if i:            
+            count += 1    
+    coverage = 100 * (count / 2)    
+    print("coverage of the function isDominated ", coverage, "%")
 
 def median(seq, key=identity):
     """Returns the median of *seq* - the numeric value separating the higher
@@ -821,18 +852,36 @@ def selSPEA2(individuals, k):
     return [individuals[i] for i in chosen_indices]
 
 
+randomizedSelect_branches = [False, False, False, False]
+
+
 def _randomizedSelect(array, begin, end, i):
     """Allows to select the ith smallest element from array without sorting it.
     Runtime is expected to be O(n).
     """
     if begin == end:
+        randomizedSelect_branches[0] = True
         return array[begin]
+    else:
+        randomizedSelect_branches[1] = True
+        
     q = _randomizedPartition(array, begin, end)
     k = q - begin + 1
     if i < k:
+        randomizedSelect_branches[2] = True
         return _randomizedSelect(array, begin, q, i)
     else:
+        randomizedSelect_branches[3] = True
         return _randomizedSelect(array, q + 1, end, i - k)
+
+
+def print_randomizedSelectCoverage():
+    count = 0
+    for item in randomizedSelect_branches:
+        if item:
+            count += 1
+    coverage = (count / 4) * 100
+    print("The branch coverage of the function \"_randomizedSelect\" is ", coverage, "%.")
 
 
 def _randomizedPartition(array, begin, end):
