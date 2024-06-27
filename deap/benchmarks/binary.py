@@ -138,7 +138,7 @@ def print_chuang_f2_coverage():
         if i:            
             count += 1    
     coverage = 100 * (count / 4)    
-    print("coverage of the function selDoubleTournament ", coverage, "%")
+    print("coverage of the function chuang_f2 ", coverage, "%")
 
 branch_coverage_chuang_f3 = {
     "chuang_f3_branch_1": False,  
